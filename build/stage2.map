@@ -29,130 +29,130 @@ LOAD /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/
                 0x00000500                        phys = 0x500
                 0x00000500                        . = phys
 
-.entry          0x00000500      0x1c7
+.entry          0x00000500      0x23f
                 0x00000500                        __entry_start = .
  *(.entry)
- .entry         0x00000500      0x1c7 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
+ .entry         0x00000500      0x23f /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
                 0x00000500                entry
 
-.text           0x000006d0     0x1d56
-                0x000006d0                        __text_start = .
+.text           0x00000740     0x1d56
+                0x00000740                        __text_start = .
  *(.text)
- .text          0x000006d0      0x1a5 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/x86.obj
-                0x000006d0                x86_outb
-                0x000006db                x86_inb
-                0x000006e4                x86_Disk_GetDriveParams
-                0x000007a7                x86_Disk_Reset
-                0x000007f7                x86_Disk_Read
- .text          0x00000875       0x52 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
-                0x00000875                islower
-                0x0000089b                toupper
- .text          0x000008c7      0x191 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
-                0x000008c7                DISK_Initialize
-                0x0000092f                DISK_LBA2CHS
-                0x000009bc                DISK_ReadSectors
- .text          0x00000a58      0xa1a /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
-                0x00000a58                FAT_ReadBootSector
-                0x00000a75                FAT_ReadFat
-                0x00000aa9                FAT_Initialize
-                0x00000cd4                FAT_ClusterToLba
-                0x00000cf5                FAT_OpenEntry
-                0x00000eb9                FAT_NextCluster
-                0x00000f06                FAT_Read
-                0x0000114c                FAT_ReadEntry
-                0x0000116d                FAT_Close
-                0x000011c7                FAT_FindFile
-                0x0000132c                FAT_Open
- .text          0x00001472       0x7b /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
-                0x00001472                draw_pixel
- .text          0x000014ed      0x29b /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
-                0x000014ed                start
- .text          0x00001788       0xde /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
-                0x00001788                memcpy
-                0x000017c9                memset
-                0x000017fc                memcmp
- .text          0x00001866      0x87a /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
-                0x00001866                putchr
-                0x00001895                putcolor
-                0x000018c7                getchr
-                0x000018e9                getcolor
-                0x0000190e                setcursor
-                0x0000197f                clrscr
-                0x00001a0d                scrollback
-                0x00001afb                putc
-                0x00001c0b                puts
-                0x00001c3a                printf_unsigned
-                0x00001cde                printf_signed
-                0x00001d3b                printf
-                0x00002050                print_buffer
- .text          0x000020e0       0xb6 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
-                0x000020e0                strchr
-                0x0000211e                strcpy
-                0x00002170                strlen
- .text          0x00002196       0x37 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
-                0x00002196                align
- *fill*         0x000021cd        0x3 
- .text          0x000021d0      0x11a /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_udivdi3.o)
-                0x000021d0                __udivdi3
- *fill*         0x000022ea        0x6 
- .text          0x000022f0      0x136 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_umoddi3.o)
-                0x000022f0                __umoddi3
+ .text          0x00000740      0x1a5 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/x86.obj
+                0x00000740                x86_outb
+                0x0000074b                x86_inb
+                0x00000754                x86_Disk_GetDriveParams
+                0x00000817                x86_Disk_Reset
+                0x00000867                x86_Disk_Read
+ .text          0x000008e5       0x52 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
+                0x000008e5                islower
+                0x0000090b                toupper
+ .text          0x00000937      0x191 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
+                0x00000937                DISK_Initialize
+                0x0000099f                DISK_LBA2CHS
+                0x00000a2c                DISK_ReadSectors
+ .text          0x00000ac8      0xa1a /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
+                0x00000ac8                FAT_ReadBootSector
+                0x00000ae5                FAT_ReadFat
+                0x00000b19                FAT_Initialize
+                0x00000d44                FAT_ClusterToLba
+                0x00000d65                FAT_OpenEntry
+                0x00000f29                FAT_NextCluster
+                0x00000f76                FAT_Read
+                0x000011bc                FAT_ReadEntry
+                0x000011dd                FAT_Close
+                0x00001237                FAT_FindFile
+                0x0000139c                FAT_Open
+ .text          0x000014e2       0x7b /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
+                0x000014e2                draw_pixel
+ .text          0x0000155d      0x29b /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
+                0x0000155d                start
+ .text          0x000017f8       0xde /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
+                0x000017f8                memcpy
+                0x00001839                memset
+                0x0000186c                memcmp
+ .text          0x000018d6      0x87a /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
+                0x000018d6                putchr
+                0x00001905                putcolor
+                0x00001937                getchr
+                0x00001959                getcolor
+                0x0000197e                setcursor
+                0x000019ef                clrscr
+                0x00001a7d                scrollback
+                0x00001b6b                putc
+                0x00001c7b                puts
+                0x00001caa                printf_unsigned
+                0x00001d4e                printf_signed
+                0x00001dab                printf
+                0x000020c0                print_buffer
+ .text          0x00002150       0xb6 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
+                0x00002150                strchr
+                0x0000218e                strcpy
+                0x000021e0                strlen
+ .text          0x00002206       0x37 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
+                0x00002206                align
+ *fill*         0x0000223d        0x3 
+ .text          0x00002240      0x11a /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_udivdi3.o)
+                0x00002240                __udivdi3
+ *fill*         0x0000235a        0x6 
+ .text          0x00002360      0x136 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_umoddi3.o)
+                0x00002360                __umoddi3
 
-.data           0x00002428       0x18
-                0x00002428                        __data_start = .
+.data           0x00002498       0x18
+                0x00002498                        __data_start = .
  *(.data)
- .data          0x00002428        0xb /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
-                0x00002428                vbe_screen
- .data          0x00002433        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
- .data          0x00002433        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
- .data          0x00002433        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
- .data          0x00002433        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
- *fill*         0x00002433        0x1 
- .data          0x00002434        0x8 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
-                0x00002434                KernelLoadBuffer
-                0x00002438                Kernel
- .data          0x0000243c        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
- .data          0x0000243c        0x4 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
-                0x0000243c                g_ScreenBuffer
- .data          0x00002440        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
- .data          0x00002440        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
- .data          0x00002440        0x0 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_udivdi3.o)
- .data          0x00002440        0x0 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_umoddi3.o)
+ .data          0x00002498        0xb /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
+                0x00002498                vbe_screen
+ .data          0x000024a3        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
+ .data          0x000024a3        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
+ .data          0x000024a3        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
+ .data          0x000024a3        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
+ *fill*         0x000024a3        0x1 
+ .data          0x000024a4        0x8 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
+                0x000024a4                KernelLoadBuffer
+                0x000024a8                Kernel
+ .data          0x000024ac        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
+ .data          0x000024ac        0x4 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
+                0x000024ac                g_ScreenBuffer
+ .data          0x000024b0        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
+ .data          0x000024b0        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
+ .data          0x000024b0        0x0 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_udivdi3.o)
+ .data          0x000024b0        0x0 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_umoddi3.o)
 
-.rodata         0x00002440      0x282
-                0x00002440                        __rodata_start = .
+.rodata         0x000024b0      0x282
+                0x000024b0                        __rodata_start = .
  *(.rodata)
- .rodata        0x00002440      0x11b /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
- .rodata        0x0000255b       0xaa /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
- *fill*         0x00002605        0x3 
- .rodata        0x00002608       0xba /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
-                0x00002608                SCREEN_WIDTH
-                0x0000260c                SCREEN_HEIGHT
-                0x00002610                DEFAULT_COLOR
-                0x00002614                g_HexChars
+ .rodata        0x000024b0      0x11b /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
+ .rodata        0x000025cb       0xaa /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
+ *fill*         0x00002675        0x3 
+ .rodata        0x00002678       0xba /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
+                0x00002678                SCREEN_WIDTH
+                0x0000267c                SCREEN_HEIGHT
+                0x00002680                DEFAULT_COLOR
+                0x00002684                g_HexChars
 
-.eh_frame       0x000026c4       0xd8
- .eh_frame      0x000026c4       0x64 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_udivdi3.o)
- .eh_frame      0x00002728       0x74 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_umoddi3.o)
+.eh_frame       0x00002734       0xd8
+ .eh_frame      0x00002734       0x64 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_udivdi3.o)
+ .eh_frame      0x00002798       0x74 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_umoddi3.o)
 
-.bss            0x0000279c      0x314
-                0x0000279c                        __bss_start = .
+.bss            0x0000280c      0x314
+                0x0000280c                        __bss_start = .
  *(.bss)
- .bss           0x0000279c      0x300 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
- .bss           0x00002a9c        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
- .bss           0x00002a9c        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
- .bss           0x00002a9c        0xc /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
- .bss           0x00002aa8        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
- .bss           0x00002aa8        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
- .bss           0x00002aa8        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
- .bss           0x00002aa8        0x8 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
-                0x00002aa8                g_ScreenX
-                0x00002aac                g_ScreenY
- .bss           0x00002ab0        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
- .bss           0x00002ab0        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
- .bss           0x00002ab0        0x0 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_udivdi3.o)
- .bss           0x00002ab0        0x0 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_umoddi3.o)
-                0x00002ab0                        __end = .
+ .bss           0x0000280c      0x300 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
+ .bss           0x00002b0c        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
+ .bss           0x00002b0c        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
+ .bss           0x00002b0c        0xc /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
+ .bss           0x00002b18        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
+ .bss           0x00002b18        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
+ .bss           0x00002b18        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
+ .bss           0x00002b18        0x8 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
+                0x00002b18                g_ScreenX
+                0x00002b1c                g_ScreenY
+ .bss           0x00002b20        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
+ .bss           0x00002b20        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
+ .bss           0x00002b20        0x0 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_udivdi3.o)
+ .bss           0x00002b20        0x0 /home/mm8/code/os/mm8/MM8-EmNet/toolchain/i686-elf/lib/gcc/i686-elf/13.3.0/libgcc.a(_umoddi3.o)
+                0x00002b20                        __end = .
 OUTPUT(/home/mm8/code/os/mm8/MM8-EmNet/build/stage2.bin binary)
 
 .debug_info     0x00000000     0x2101

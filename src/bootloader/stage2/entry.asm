@@ -381,9 +381,66 @@ checkCPUID:
 
 disablePaging32:
     mov eax, cr0
-    and eax, ~CR0_PAGING
+    and eax, ~(CR0_PAGING)  ; Brckets for NASM lololol
     mov cr0, eax
-    ret
+
+
+
+    ; PAE
+
+    mov edi, PML4T_ADDR
+    mov cr3, edi       ; cr3 lets the CPU know where the page tables are
+
+    ; Clear Old Tables
+    xor eax, eax
+    mov ecx, SIZEOF_PAGE_TABLE
+    rep stosd                    ; Zero out the RAM allocation
+    
+    mov edi, cr3                 ; Reset EDI back to PML4T_ADDR
+
+
+
+
+    xor eax, eax
+    mov ecx, SIZEOF_PAGE_TABLE
+    rep stosd          ; writes 4 * SIZEOF_PAGE_TABLE bytes, which is enough space
+                       ; for the 4 page tables
+    mov edi, cr3       ; reset di back to the beginning of the page table
+
+
+
+
+    ; edi was previously set to PML4T_ADDR
+    mov DWORD [edi], PDPT_ADDR & PT_ADDR_MASK | PT_PRESENT | PT_READABLE
+
+    mov edi, PDPT_ADDR
+    mov DWORD [edi], PDT_ADDR & PT_ADDR_MASK | PT_PRESENT | PT_READABLE
+
+    mov edi, PDT_ADDR
+    mov DWORD [edi], PT_ADDR & PT_ADDR_MASK | PT_PRESENT | PT_READABLE
+
+
+
+    ; First 2 mb
+    mov edi, PT_ADDR
+    mov ebx, PT_PRESENT | PT_READABLE
+    mov ecx, ENTRIES_PER_PT      ; 1 full page table addresses 2MiB
+
+    
+
+.SetEntry:
+    mov DWORD [edi], ebx
+    add ebx, PAGE_SIZE
+    add edi, SIZEOF_PT_ENTRY
+    loop .SetEntry               ; Set the next entry.
+
+    ; PAE Enable Physical
+    mov eax, cr4
+    or eax, CR4_PAE_ENABLE       ; Turn on PAE bit (Bit 5)
+    mov cr4, eax
+
+    ret    ; Go back lolol
+
 
 
 
