@@ -323,9 +323,17 @@ longMode:
     ; List:
     ; Check CPUID
 
-    jmp checkCPUID
+    call checkCPUID
+    cmp eax, 1
+    jne .failed
 
-    jmp disablePaging32
+    call disablePaging32
+
+    ; TEMP
+    hlt
+
+    .failed:
+        hlt
 
 
 
@@ -338,12 +346,14 @@ checkCPUID:
     pushfd
     pop eax
 
-    ; The original value should be saved for comparison and restoration later
+    ; Save value fr comp
     mov ecx, eax
     xor eax, EFLAGS_ID
 
     ; storing the eflags and then retrieving it again will show whether or not
     ; the bit could successfully be flipped
+
+    ; Test if it can be flipped
     push eax                    ; save to eflags
     popfd
     pushfd                      ; restore from eflags
@@ -356,12 +366,26 @@ checkCPUID:
     ; if the bit in eax was successfully flipped (eax != ecx), CPUID is supported.
     xor eax, ecx
     jnz .supported
+
     .notSupported:
-        mov ax, 0
+        mov eax, 0
         ret
+
     .supported:
-        mov ax, 1
-        jmp .queryLongMode
+        mov eax, CPUID_EXTENSIONS
+        cpuid
+        cmp eax, CPUID_EXT_FEATURES
+        jz .NoLongModeSupport
+
+        ;sucsess
+        mov eax, 1
+        ret
+
+        .NoLongModeSupport:
+            mov eax, 0
+            ret
+    
+        
 
 
 .queryLongMode:
@@ -398,14 +422,6 @@ disablePaging32:
     
     mov edi, cr3                 ; Reset EDI back to PML4T_ADDR
 
-
-
-
-    xor eax, eax
-    mov ecx, SIZEOF_PAGE_TABLE
-    rep stosd          ; writes 4 * SIZEOF_PAGE_TABLE bytes, which is enough space
-                       ; for the 4 page tables
-    mov edi, cr3       ; reset di back to the beginning of the page table
 
 
 
