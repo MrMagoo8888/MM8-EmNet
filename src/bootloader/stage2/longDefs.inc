@@ -44,3 +44,7 @@ ACCESSED       equ 1 << 0
 GRAN_4K       equ 1 << 7
 SZ_32         equ 1 << 6
 LONG_MODE     equ 1 << 5
+
+;gdt
+CODE_SEG_64 equ 0x28
+DATA_SEG_64 equ 0x30

@@ -191,6 +191,26 @@ g_GDT:      ; NULL descriptor
             db 00001111b                ; granularity (1b pages, 16-bit pmode) + limit (bits 16-19)
             db 0                        ; base high
 
+            ; 
+            ; L-mode
+            ; 
+
+            ; 0x28: 64-bit Kernel Code Segment
+            dw 0xFFFF                   ; Limit (Ignored in 64-bit mode)
+            dw 0x0000                   ; Base low
+            db 0x00                     ; Base middle
+            db 10011010b                ; Access byte (Present, Ring 0, Code, Executable)
+            db 10101111b                ; Granularity (Bit 5 'L' flag IS SET here for 64-bit)
+            db 0x00                     ; Base high
+
+            ; 0x30: 64-bit Kernel Data Segment
+            dw 0xFFFF                   ; Limit (Ignored in 64-bit mode)
+            dw 0x0000                   ; Base low
+            db 0x00                     ; Base middle
+            db 10010010b                ; Access byte (Present, Ring 0, Data, Writable)
+            db 10001111b                ; Granularity (Bit 5 'L' flag is 0 for data)
+            db 0x00                     ; Base high
+
 g_GDTDesc:  dw g_GDTDesc - g_GDT - 1    ; limit = size of GDT
             dd g_GDT                    ; address of GDT
 
