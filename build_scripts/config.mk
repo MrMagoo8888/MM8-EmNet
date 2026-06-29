@@ -1,5 +1,5 @@
 
-export CFLAGS = -std=c99 -g
+export CFLAGS = -std=c99 -g -fno-pic -mno-red-zone
 export ASMFLAGS =
 export CC = gcc
 export CXX = g++
@@ -12,7 +12,7 @@ export LIBS =
 export TARGET = x86_64-elf
 export TARGET_ASM = nasm
 export TARGET_ASMFLAGS =
-export TARGET_CFLAGS = -std=c99 -g #-O2
+export TARGET_CFLAGS = -std=c99 -g -std=c99 -g -fno-pic -mno-red-zone #-O2
 export TARGET_CC = $(TARGET)-gcc
 export TARGET_CXX = $(TARGET)-g++
 export TARGET_LD = $(TARGET)-gcc

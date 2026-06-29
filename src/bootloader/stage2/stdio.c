@@ -123,7 +123,7 @@ const char g_HexChars[] = "0123456789abcdef";
 
 void printf_unsigned(unsigned long long number, int radix)
 {
-    char buffer[32];
+    char buffer[64];
     int pos = 0;
 
     // convert number to ASCII
@@ -218,7 +218,7 @@ void printf(const char* fmt, ...)
                 break;
 
             case PRINTF_STATE_SPEC:
-            PRINTF_STATE_SPEC_:
+            /*PRINTF_STATE_SPEC_:
                 switch (*fmt)
                 {
                     case 'c':   putc((char)va_arg(args, int));
@@ -248,8 +248,44 @@ void printf(const char* fmt, ...)
 
                     // ignore invalid spec
                     default:    break;
-                }
+                }   */
+                PRINTF_STATE_SPEC_:
+                    switch (*fmt)
+                    {
+                        case 'c':   putc((char)va_arg(args, int));
+                                    break;
 
+                        case 's':   
+                                    puts(va_arg(args, const char*));
+                                    break;
+
+                        case '%':   putc('%');
+                                    break;
+
+                        case 'd':
+                        case 'i':   radix = 10; sign = true; number = true;
+                                    break;
+
+                        case 'u':   radix = 10; sign = false; number = true;
+                                    break;
+
+                        case 'X':
+                        case 'x':   radix = 16; sign = false; number = true;
+                                    break;
+
+                        case 'p':   radix = 16; sign = false; number = true;
+                                    length = PRINTF_LENGTH_LONG_LONG; // Forces 64-bit pointer reading
+                                    puts("0x");
+                                    break;
+
+                        case 'o':   radix = 8; sign = false; number = true;
+                                    break;
+
+                        // ignore invalid spec
+                        default:    break;
+                    }
+
+                
                 if (number)
                 {
                     if (sign)
@@ -301,12 +337,12 @@ void printf(const char* fmt, ...)
     va_end(args);
 }
 
-void print_buffer(const char* msg, const void* buffer, uint32_t count)
+void print_buffer(const char* msg, const void* buffer, uint64_t count)
 {
     const uint8_t* u8Buffer = (const uint8_t*)buffer;
     
     puts(msg);
-    for (uint32_t i = 0; i < count; i++)
+    for (uint64_t i = 0; i < count; i++)
     {
         putc(g_HexChars[u8Buffer[i] >> 4]);
         putc(g_HexChars[u8Buffer[i] & 0xF]);

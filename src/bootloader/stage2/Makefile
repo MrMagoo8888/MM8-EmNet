@@ -1,5 +1,5 @@
 TARGET_ASMFLAGS += -f elf64
-TARGET_CFLAGS += -ffreestanding -nostdlib
+TARGET_CFLAGS += -ffreestanding -nostdlib -m64
 TARGET_LIBS += -lgcc
 TARGET_LINKFLAGS += -T linker.ld -nostdlib
 
