@@ -4,7 +4,7 @@
 #include "string.h"
 #include "memory.h"
 #include "ctype.h"
-#include <stddef.h>
+#include "stddef.h"
 #include "minmax.h"
 
 #define SECTOR_SIZE             512

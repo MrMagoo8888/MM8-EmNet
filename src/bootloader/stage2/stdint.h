@@ -23,7 +23,7 @@
   // 64-bit pointer and size definitions
   typedef long long intptr_t;
   typedef unsigned long long uintptr_t;
-  typedef unsigned long long size_t;
+  //typedef unsigned long long size_t;  STDDEF
   typedef long long ssize_t;
 #elif defined(__i386__) || defined(_WIN32)
   typedef char int8_t;

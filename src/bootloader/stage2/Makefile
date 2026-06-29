@@ -1,7 +1,7 @@
 TARGET_ASMFLAGS += -f elf64
-TARGET_CFLAGS += -ffreestanding -nostdlib -m64
+TARGET_CFLAGS += -ffreestanding -nostdlib -m64 -mno-red-zone -fno-pic
 TARGET_LIBS += -lgcc
-TARGET_LINKFLAGS += -T linker.ld -nostdlib
+TARGET_LINKFLAGS += -T linker.ld -nostdlib -static
 
 SOURCES_C=$(wildcard *.c)
 SOURCES_ASM=$(wildcard *.asm)
@@ -15,7 +15,7 @@ all: stage2
 stage2: $(BUILD_DIR)/stage2.bin
 
 $(BUILD_DIR)/stage2.bin: $(OBJECTS_ASM) $(OBJECTS_C)
-	@$(TARGET_LD) $(TARGET_LINKFLAGS) -Wl,-Map=$(BUILD_DIR)/stage2.map -o $@ $^ $(TARGET_LIBS)
+	@$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LINKFLAGS) -Wl,-Map=$(BUILD_DIR)/stage2.map -o $@ $^ $(TARGET_LIBS)
 	@echo "--> Created  stage2.bin"
 
 $(BUILD_DIR)/stage2/c/%.obj: %.c
