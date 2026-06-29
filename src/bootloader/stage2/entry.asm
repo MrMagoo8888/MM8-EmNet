@@ -67,6 +67,20 @@ entry:
     add eax, ebx                            ; eax = y * pitch + x * 4
     add edi, eax                            ; edi = framebuffer + offset
     mov dword [edi], 0x00FF0000             ; Draw a red pixel (0x00RRGGBB)
+
+    call longMode
+
+    ; --- Draw a test pixel from assembly ---
+    ; Draw a RED pixel at (x=50, y=50) to verify VBE mode
+    mov edi, [vbe_screen.physical_buffer]   ; Get framebuffer base address
+    movzx eax, word [vbe_screen.pitch]      ; eax = bytes per scanline (pitch)
+    mov ebx, 51                             ; y = 50
+    mul ebx                                 ; eax = y * pitch
+    mov ebx, 51                             ; x = 50
+    shl ebx, 2                              ; ebx = x * 4 (for 32 bpp)
+    add eax, ebx                            ; eax = y * pitch + x * 4
+    add edi, eax                            ; edi = framebuffer + offset
+    mov dword [edi], 0x000000FF             ; bu
     ; --- End of test pixel code ---
    
     ; clear bss (uninitialized data)
@@ -340,8 +354,17 @@ vbe_set_mode:
 
 longMode:
 
-    ; List:
-    ; Check CPUID
+    ; --- Draw a test pixel from assembly ---
+    ; Draw a MInt pixel at (x=50, y=50) to verify VBE mode
+    mov edi, [vbe_screen.physical_buffer]   ; Get framebuffer base address
+    movzx eax, word [vbe_screen.pitch]      ; eax = bytes per scanline (pitch)
+    mov ebx, 85                             ; y = 85
+    mul ebx                                 ; eax = y * pitch
+    mov ebx, 90                             ; x = 90
+    shl ebx, 2                              ; ebx = x * 4 (for 32 bpp)
+    add eax, ebx                            ; eax = y * pitch + x * 4
+    add edi, eax                            ; edi = framebuffer + offset
+    mov dword [edi], 0x00AAFFCA             ; Draw a mint-y pixel (0x00RRGGBB)
 
     call checkCPUID
     cmp eax, 1
@@ -350,7 +373,7 @@ longMode:
     call disablePaging32
 
     ; TEMP
-    hlt
+    ;hlt
 
     .failed:
         hlt
@@ -385,7 +408,20 @@ checkCPUID:
 
     ; if the bit in eax was successfully flipped (eax != ecx), CPUID is supported.
     xor eax, ecx
-    jnz .supported
+    jz .notSupported
+
+    ;query max extend leaves
+    mov eax, CPUID_EXTENSIONS
+    cpuid
+    cmp eax, CPUID_EXT_FEATURES
+    jb .notSupported            ; if the CPU can't report long mode support, then it likely
+                                ; doesn't have it
+
+    ; Query ext feat for l-mode flap
+    mov eax, CPUID_EXT_FEATURES
+    cpuid
+    test edx, CPUID_EDX_EXT_FEAT_LM
+    jz .notSupported
 
     .notSupported:
         mov eax, 0
@@ -437,52 +473,92 @@ disablePaging32:
 
     ; Clear Old Tables
     xor eax, eax
-    mov ecx, SIZEOF_PAGE_TABLE
+    mov ecx, 4096
     rep stosd                    ; Zero out the RAM allocation
     
-    mov edi, cr3                 ; Reset EDI back to PML4T_ADDR
-
-
-
-
-
-    ; edi was previously set to PML4T_ADDR
-    mov DWORD [edi], PDPT_ADDR & PT_ADDR_MASK | PT_PRESENT | PT_READABLE
+    mov edi, PML4T_ADDR          ; Reset EDI back to PML4T_ADDR
+    mov DWORD [edi], PDPT_ADDR | PT_PRESENT | PT_READABLE       ;Link Paging strucs, Entries must have present (0x1) and writable (0x2) flags set
+    mov DWORD [edit + 4], 0 Clear upper 32bits
 
     mov edi, PDPT_ADDR
-    mov DWORD [edi], PDT_ADDR & PT_ADDR_MASK | PT_PRESENT | PT_READABLE
+    mov DWORD [edi], PT_ADDR | PT_PRESENT | PT_READABLE
+    mov DWORD [edi + 4], 0  ; Clear upper 32
 
     mov edi, PDT_ADDR
-    mov DWORD [edi], PT_ADDR & PT_ADDR_MASK | PT_PRESENT | PT_READABLE
+    mov DWORD [edi], PT_ADDR | PT_PRESENT | PT_READABLE
+    mov DWORD [edi + 4], 0  ; Clear up 32 again lololol
 
 
 
-    ; First 2 mb
+    ; Identity map the first 2mb of ram via 4kb pages (kinda complete and utter gibberish)
     mov edi, PT_ADDR
-    mov ebx, PT_PRESENT | PT_READABLE
-    mov ecx, ENTRIES_PER_PT      ; 1 full page table addresses 2MiB
-
-    
+    mov ebx, PT_PRESENT | PT_READABLE   ; Base physical addr 0x0 + flags (0x3)
+    mov ecx, ENTRIES_PER_PT             ; 512 Entries
 
 .SetEntry:
-    mov DWORD [edi], ebx
-    add ebx, PAGE_SIZE
-    add edi, SIZEOF_PT_ENTRY
+    mov DWORD [edi], ebx    ; Write low 32 (phy addr flags)
+    mov DWORD [edi + 4], 0  ; Clear upper 32 of page explicetly
+    add ebx, PAGE_SIZE      ;   move  to next 4kb phyical page frame 
+    add edi, SIZEOF_PT_ENTRY    ; Move to next 8byte page temble entry
     loop .SetEntry               ; Set the next entry.
 
-    ; PAE Enable Physical
-    mov eax, cr4
-    or eax, CR4_PAE_ENABLE       ; Turn on PAE bit (Bit 5)
-    mov cr4, eax
+    ; Switch phy extentions flag (PAE) in CR4
+    mov ecx, 0xC0000080         ; IA32_EFER MSR adress (idk either lol look it up)
+    rdmsr
+    or eax, CR0_PAGING
+    mov cr0, eax
 
-    ret    ; Go back lolol
-
-
-
-
+    ; Architectural far jump to load 64bit
+    jmp CODE_SEG_64:.long_mode_64   ;Why did i use underscores you ask? Well, Idk lol
 
 
+;
+; 64 BITS BABY
+;
 
+
+
+
+
+[bits 64]
+.long_mode_64:
+    ; 10. Update all execution unit segment data registers to 64-bit equivalents
+    mov ax, DATA_SEG_64
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
+
+    ; --- Draw Pixel 4: SOLID BRIGHT GREEN pixel at (x=150, y=150) ---
+    ; This explicitly validates that we are parsing native 64-bit logic loops!
+    mov rdi, [vbe_screen.physical_buffer]
+    movzx rax, word [vbe_screen.pitch]
+    mov rbx, 150
+    mul rbx
+    mov rbx, 150
+    shl rbx, 2
+    add rax, rbx
+    add rdi, rax
+    mov dword [rdi], 0x0000FF00             ; Draw 64-bit validation pixel
+
+    cli
+.lock:
+    hlt
+    jmp .lock
+
+
+
+
+
+; PAE shit idk if need
+;
+;    ; PAE Enable Physical
+;    mov eax, cr4
+;    or eax, CR4_PAE_ENABLE       ; Turn on PAE bit (Bit 5)
+;    mov cr4, eax
+;
+;    ret    ; Go back lolol
 
 
 
