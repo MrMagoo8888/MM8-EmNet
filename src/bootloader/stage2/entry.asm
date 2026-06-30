@@ -9,7 +9,7 @@ section .entry
 extern __bss_start
 extern __end
 
-extern start
+extern bootloadMain
 global vbe_screen
 global entry
 
@@ -36,10 +36,10 @@ entry:
     ; jc .vbe_error ; uncomment to handle VBE errors
 
     ; switch to protected mode
-    call EnableA20          ; 2 - Enable A20 gate
-    call LoadGDT            ; 3 - Load GDT
+    call EnableA20          ; Enable A20 gate
+    call LoadGDT            ; Load GDT
 
-    ; 4 - set protection enable flag in CR0
+    ; et protection enable flag in CR0
     mov eax, cr0
     or al, 1
     mov cr0, eax
@@ -51,7 +51,7 @@ entry:
     ; we are now in protected mode!
     [bits 32]
     
-    ; 6 - setup segment registers
+    ;setup segment registers
     mov ax, 0x10
     mov ds, ax
     mov ss, ax
@@ -508,7 +508,7 @@ disablePaging32:
     add edi, SIZEOF_PT_ENTRY    ; Move to next 8byte page temble entry
     loop .SetEntry               ; Set the next entry.
 
-    ; Enable PAE and long mode before turning on paging.
+    ; Enable PAE and long mode then turning on paging
     mov eax, cr4
     or eax, CR4_PAE_ENABLE
     mov cr4, eax
@@ -536,7 +536,7 @@ disablePaging32:
 
 [bits 64]
 .long_mode_64:
-    ; 10. Update all execution unit segment data registers to 64-bit equivalents
+    ;Make execution unit segment data registers to 64-bit equivalents
     mov ax, DATA_SEG_64
     mov ds, ax
     mov es, ax
@@ -544,8 +544,8 @@ disablePaging32:
     mov gs, ax
     mov ss, ax
 
-    ; --- Draw Pixel 4: SOLID BRIGHT GREEN pixel at (x=150, y=150) ---
-    ; This validates that we are parsing natieve 64-bit logic loops
+    ; --- praw pixel 4: SOLID BRIGHT GREEN pixel at (x=150, y=150) ---
+    ; This sures that we are parsing natieve 64-bit logic loops
     mov rdi, [vbe_screen.physical_buffer]
     movzx rax, word [vbe_screen.pitch]
     mov rbx, 150
@@ -556,7 +556,16 @@ disablePaging32:
     add rdi, rax
     mov dword [rdi], 0x0000FF00             ; Draw 64-bit validation pixel
 
-    cli
+    ; stack setup
+    mov rsp, stack_bum
+    mov rbp, rsp
+
+    ; Pass firswt arg using rdi as per AMD64 System V ABI apparently
+    movzx rdi, byte [g_BootDrive]
+
+    ; Jump into C!!
+    call bootloadMain
+
 .lock:
     hlt
     jmp .lock
@@ -648,3 +657,10 @@ vbe_screen:
     .pitch            dw 0
     .bpp              db 0
     .physical_buffer  dd 0
+
+section .bss
+
+align 16
+stack_bum:      ; Bottem of new stack
+    resb 16384  ; Reserve 16kb stack 
+stack_top:
