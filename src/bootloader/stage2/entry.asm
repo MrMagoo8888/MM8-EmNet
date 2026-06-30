@@ -478,7 +478,7 @@ disablePaging32:
     
     mov edi, PML4T_ADDR          ; Reset EDI back to PML4T_ADDR
     mov DWORD [edi], PDPT_ADDR | PT_PRESENT | PT_READABLE       ;Link Paging strucs, Entries must have present (0x1) and writable (0x2) flags set
-    mov DWORD [edit + 4], 0 Clear upper 32bits
+    mov DWORD [edi + 4], 0      ;Clear upper 32bits
 
     mov edi, PDPT_ADDR
     mov DWORD [edi], PT_ADDR | PT_PRESENT | PT_READABLE
@@ -531,7 +531,7 @@ disablePaging32:
     mov ss, ax
 
     ; --- Draw Pixel 4: SOLID BRIGHT GREEN pixel at (x=150, y=150) ---
-    ; This explicitly validates that we are parsing native 64-bit logic loops!
+    ; This validates that we are parsing natieve 64-bit logic loops
     mov rdi, [vbe_screen.physical_buffer]
     movzx rax, word [vbe_screen.pitch]
     mov rbx, 150
