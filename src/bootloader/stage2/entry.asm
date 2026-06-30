@@ -352,6 +352,7 @@ vbe_set_mode:
 ; SET UP LONG!!!
 ;
 
+[bits 32]
 longMode:
 
     ; --- Draw a test pixel from assembly ---
@@ -368,15 +369,20 @@ longMode:
 
     call checkCPUID
     cmp eax, 1
-    jne .failed
+    jne .failed_lock
 
     call disablePaging32
+
+    ret
 
     ; TEMP
     ;hlt
 
     .failed:
         hlt
+
+    .failed_lock:
+        cli 
 
 
 
@@ -413,7 +419,7 @@ checkCPUID:
     ;query max extend leaves
     mov eax, CPUID_EXTENSIONS
     cpuid
-    cmp eax, CPUID_EXT_FEATURES
+    cmp eax, CPUID_EXT_FEATURES     ; Comp max leaf to 0x80000001
     jb .notSupported            ; if the CPU can't report long mode support, then it likely
                                 ; doesn't have it
 
@@ -502,9 +508,17 @@ disablePaging32:
     add edi, SIZEOF_PT_ENTRY    ; Move to next 8byte page temble entry
     loop .SetEntry               ; Set the next entry.
 
-    ; Switch phy extentions flag (PAE) in CR4
-    mov ecx, 0xC0000080         ; IA32_EFER MSR adress (idk either lol look it up)
+    ; Enable PAE and long mode before turning on paging.
+    mov eax, cr4
+    or eax, CR4_PAE_ENABLE
+    mov cr4, eax
+
+    mov ecx, 0xC0000080         ; IA32_EFER MSR address
     rdmsr
+    or eax, EFER_LME
+    wrmsr
+
+    mov eax, cr0
     or eax, CR0_PAGING
     mov cr0, eax
 

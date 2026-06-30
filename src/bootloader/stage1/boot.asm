@@ -65,8 +65,6 @@ start:
     mov si, msg_loading
     call puts
 
-    halt
-
     ; read drive parameters (sectors per track and head count),
     ; instead of relying on data on formatted disk
     push es

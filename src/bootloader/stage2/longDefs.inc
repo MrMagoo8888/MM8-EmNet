@@ -9,6 +9,7 @@ CPUID_EXT_FEATURES equ 0x80000001 ; returns flags containing long mode support a
 CPUID_EDX_EXT_FEAT_LM equ (1 << 29) ; Define the 29th bit for Long Mode
 
 CR0_PAGING equ 1 << 31
+EFER_LME equ 1 << 8
 
 ; PAE
 PML4T_ADDR equ 0x1000

@@ -1,4 +1,16 @@
-qemu-system-x86_64 -drive format=raw,file=build/main_floppy.img
+qemu-system-x86_64 -cpu host -enable-kvm -d int,cpu_reset,guest_errors -D qemu.log -drive format=raw,file=build/main_floppy.img 
+#qemu-system-x86_64 -cpu host -enable-kvm -drive format=raw,file=build/main_floppy.img
+
+
+# qemu-system-x86_64 -cpu qemu64 -drive format=raw,file=build/main_floppy.img
+
+
+
+
+
+
+#qemu-system-x86_64 -drive format=raw,file=build/main_floppy.img
+
 
 
 

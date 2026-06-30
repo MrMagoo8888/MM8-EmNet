@@ -1,6 +1,8 @@
 include build_scripts/config.mk
 
-.PHONY: all floppy_image bootloader clean always 
+.DEFAULT_GOAL := all
+
+.PHONY: all floppy_image bootloader clean always FORCE
 
 include build_scripts/toolchain.mk
 
@@ -27,12 +29,12 @@ bootloader: stage1 stage2
 
 stage1: $(BUILD_DIR)/stage1.bin
 
-$(BUILD_DIR)/stage1.bin: always
+$(BUILD_DIR)/stage1.bin: FORCE
 	@$(MAKE) -C src/bootloader/stage1 BUILD_DIR=$(abspath $(BUILD_DIR))
 
 stage2: $(BUILD_DIR)/stage2.bin
 
-$(BUILD_DIR)/stage2.bin: always
+$(BUILD_DIR)/stage2.bin: FORCE
 	@$(MAKE) -C src/bootloader/stage2 BUILD_DIR=$(abspath $(BUILD_DIR))
 
 #
@@ -40,6 +42,8 @@ $(BUILD_DIR)/stage2.bin: always
 #
 always:
 	@mkdir -p $(BUILD_DIR)
+
+FORCE:
 
 #
 # Clean

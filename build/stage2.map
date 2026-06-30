@@ -23,122 +23,122 @@ LOAD /home/mm8/code/os/mm8/MM8-EmNet/toolchain/x86_64-elf/lib/gcc/x86_64-elf/13.
                 0x0000000000000500                phys = 0x500
                 0x0000000000000500                . = phys
 
-.entry          0x0000000000000500      0x34f
+.entry          0x0000000000000500      0x32c
                 0x0000000000000500                __entry_start = .
  *(.entry)
- .entry         0x0000000000000500      0x34f /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
+ .entry         0x0000000000000500      0x32c /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
                 0x0000000000000500                entry
 
-.text           0x0000000000000850     0x1de8
-                0x0000000000000850                __text_start = .
+.text           0x0000000000000830     0x1de8
+                0x0000000000000830                __text_start = .
  *(.text)
- .text          0x0000000000000850      0x1a5 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/x86.obj
-                0x0000000000000850                x86_outb
-                0x000000000000085b                x86_inb
-                0x0000000000000864                x86_Disk_GetDriveParams
-                0x0000000000000927                x86_Disk_Reset
-                0x0000000000000977                x86_Disk_Read
- .text          0x00000000000009f5       0x52 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
-                0x00000000000009f5                islower
-                0x0000000000000a1c                toupper
- .text          0x0000000000000a47      0x1bc /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
-                0x0000000000000a47                DISK_Initialize
-                0x0000000000000ab6                DISK_LBA2CHS
-                0x0000000000000b63                DISK_ReadSectors
- .text          0x0000000000000c03      0xbbd /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
-                0x0000000000000c03                FAT_ReadBootSector
-                0x0000000000000c34                FAT_ReadFat
-                0x0000000000000c71                FAT_Initialize
-                0x0000000000000edc                FAT_ClusterToLba
-                0x0000000000000f08                FAT_OpenEntry
-                0x0000000000001105                FAT_NextCluster
-                0x000000000000115b                FAT_Read
-                0x00000000000013ec                FAT_ReadEntry
-                0x0000000000001424                FAT_Close
-                0x000000000000149d                FAT_FindFile
-                0x000000000000162a                FAT_Open
- .text          0x00000000000017c0       0x8f /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
-                0x00000000000017c0                draw_pixel
- .text          0x000000000000184f        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
- .text          0x000000000000184f      0x11e /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
-                0x000000000000184f                memcpy
-                0x00000000000018a6                memset
-                0x00000000000018ea                memcmp
- .text          0x000000000000196d      0xbad /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
-                0x000000000000196d                putchr
-                0x00000000000019a7                putcolor
-                0x00000000000019e4                getchr
-                0x0000000000001a15                getcolor
-                0x0000000000001a49                setcursor
-                0x0000000000001ab2                clrscr
-                0x0000000000001b43                scrollback
-                0x0000000000001c40                putc
-                0x0000000000001d4c                puts
-                0x0000000000001d7f                printf_unsigned
-                0x0000000000001e09                printf_signed
-                0x0000000000001e56                printf
-                0x000000000000247e                print_buffer
- .text          0x000000000000251a       0xdf /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
-                0x000000000000251a                strchr
-                0x0000000000002562                strcpy
-                0x00000000000025cb                strlen
- .text          0x00000000000025f9       0x3f /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
-                0x00000000000025f9                align
+ .text          0x0000000000000830      0x1a5 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/x86.obj
+                0x0000000000000830                x86_outb
+                0x000000000000083b                x86_inb
+                0x0000000000000844                x86_Disk_GetDriveParams
+                0x0000000000000907                x86_Disk_Reset
+                0x0000000000000957                x86_Disk_Read
+ .text          0x00000000000009d5       0x52 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
+                0x00000000000009d5                islower
+                0x00000000000009fc                toupper
+ .text          0x0000000000000a27      0x1bc /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
+                0x0000000000000a27                DISK_Initialize
+                0x0000000000000a96                DISK_LBA2CHS
+                0x0000000000000b43                DISK_ReadSectors
+ .text          0x0000000000000be3      0xbbd /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
+                0x0000000000000be3                FAT_ReadBootSector
+                0x0000000000000c14                FAT_ReadFat
+                0x0000000000000c51                FAT_Initialize
+                0x0000000000000ebc                FAT_ClusterToLba
+                0x0000000000000ee8                FAT_OpenEntry
+                0x00000000000010e5                FAT_NextCluster
+                0x000000000000113b                FAT_Read
+                0x00000000000013cc                FAT_ReadEntry
+                0x0000000000001404                FAT_Close
+                0x000000000000147d                FAT_FindFile
+                0x000000000000160a                FAT_Open
+ .text          0x00000000000017a0       0x8f /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
+                0x00000000000017a0                draw_pixel
+ .text          0x000000000000182f        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
+ .text          0x000000000000182f      0x11e /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
+                0x000000000000182f                memcpy
+                0x0000000000001886                memset
+                0x00000000000018ca                memcmp
+ .text          0x000000000000194d      0xbad /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
+                0x000000000000194d                putchr
+                0x0000000000001987                putcolor
+                0x00000000000019c4                getchr
+                0x00000000000019f5                getcolor
+                0x0000000000001a29                setcursor
+                0x0000000000001a92                clrscr
+                0x0000000000001b23                scrollback
+                0x0000000000001c20                putc
+                0x0000000000001d2c                puts
+                0x0000000000001d5f                printf_unsigned
+                0x0000000000001de9                printf_signed
+                0x0000000000001e36                printf
+                0x000000000000245e                print_buffer
+ .text          0x00000000000024fa       0xdf /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
+                0x00000000000024fa                strchr
+                0x0000000000002542                strcpy
+                0x00000000000025ab                strlen
+ .text          0x00000000000025d9       0x3f /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
+                0x00000000000025d9                align
 
-.data           0x0000000000002638       0x18
-                0x0000000000002638                __data_start = .
+.data           0x0000000000002618       0x18
+                0x0000000000002618                __data_start = .
  *(.data)
- .data          0x0000000000002638        0xb /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
-                0x0000000000002638                vbe_screen
- .data          0x0000000000002643        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
- .data          0x0000000000002643        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
- .data          0x0000000000002643        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
- .data          0x0000000000002643        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
- .data          0x0000000000002643        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
- .data          0x0000000000002643        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
- *fill*         0x0000000000002643        0x5 
- .data          0x0000000000002648        0x8 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
-                0x0000000000002648                g_ScreenBuffer
- .data          0x0000000000002650        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
- .data          0x0000000000002650        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
+ .data          0x0000000000002618        0xb /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
+                0x0000000000002618                vbe_screen
+ .data          0x0000000000002623        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
+ .data          0x0000000000002623        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
+ .data          0x0000000000002623        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
+ .data          0x0000000000002623        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
+ .data          0x0000000000002623        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
+ .data          0x0000000000002623        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
+ *fill*         0x0000000000002623        0x5 
+ .data          0x0000000000002628        0x8 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
+                0x0000000000002628                g_ScreenBuffer
+ .data          0x0000000000002630        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
+ .data          0x0000000000002630        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
 
-.rodata         0x0000000000002650      0x27a
-                0x0000000000002650                __rodata_start = .
+.rodata         0x0000000000002630      0x27a
+                0x0000000000002630                __rodata_start = .
  *(.rodata)
- .rodata        0x0000000000002650      0x11b /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
- *fill*         0x000000000000276b        0x5 
- .rodata        0x0000000000002770      0x15a /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
-                0x0000000000002770                SCREEN_WIDTH
-                0x0000000000002774                SCREEN_HEIGHT
-                0x0000000000002778                DEFAULT_COLOR
-                0x0000000000002780                g_HexChars
+ .rodata        0x0000000000002630      0x11b /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
+ *fill*         0x000000000000274b        0x5 
+ .rodata        0x0000000000002750      0x15a /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
+                0x0000000000002750                SCREEN_WIDTH
+                0x0000000000002754                SCREEN_HEIGHT
+                0x0000000000002758                DEFAULT_COLOR
+                0x0000000000002760                g_HexChars
 
-.eh_frame       0x00000000000028d0      0x570
- .eh_frame      0x00000000000028d0       0x58 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
- .eh_frame      0x0000000000002928       0x78 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
- .eh_frame      0x00000000000029a0      0x188 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
- .eh_frame      0x0000000000002b28       0x38 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
- .eh_frame      0x0000000000002b60       0x78 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
- .eh_frame      0x0000000000002bd8      0x1b8 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
- .eh_frame      0x0000000000002d90       0x78 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
- .eh_frame      0x0000000000002e08       0x38 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
+.eh_frame       0x00000000000028b0      0x570
+ .eh_frame      0x00000000000028b0       0x58 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
+ .eh_frame      0x0000000000002908       0x78 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
+ .eh_frame      0x0000000000002980      0x188 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
+ .eh_frame      0x0000000000002b08       0x38 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
+ .eh_frame      0x0000000000002b40       0x78 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
+ .eh_frame      0x0000000000002bb8      0x1b8 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
+ .eh_frame      0x0000000000002d70       0x78 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
+ .eh_frame      0x0000000000002de8       0x38 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
 
-.bss            0x0000000000002e40      0x31c
-                0x0000000000002e40                __bss_start = .
+.bss            0x0000000000002e20      0x31c
+                0x0000000000002e20                __bss_start = .
  *(.bss)
- .bss           0x0000000000002e40      0x300 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
- .bss           0x0000000000003140        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
- .bss           0x0000000000003140        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
- .bss           0x0000000000003140       0x14 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
- .bss           0x0000000000003154        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
- .bss           0x0000000000003154        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
- .bss           0x0000000000003154        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
- .bss           0x0000000000003154        0x8 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
-                0x0000000000003154                g_ScreenX
-                0x0000000000003158                g_ScreenY
- .bss           0x000000000000315c        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
- .bss           0x000000000000315c        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
-                0x000000000000315c                __end = .
+ .bss           0x0000000000002e20      0x300 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
+ .bss           0x0000000000003120        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/ctype.obj
+ .bss           0x0000000000003120        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/disk.obj
+ .bss           0x0000000000003120       0x14 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/fat.obj
+ .bss           0x0000000000003134        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/graphics.obj
+ .bss           0x0000000000003134        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/main.obj
+ .bss           0x0000000000003134        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/memory.obj
+ .bss           0x0000000000003134        0x8 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/stdio.obj
+                0x0000000000003134                g_ScreenX
+                0x0000000000003138                g_ScreenY
+ .bss           0x000000000000313c        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/string.obj
+ .bss           0x000000000000313c        0x0 /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/c/utility.obj
+                0x000000000000313c                __end = .
 OUTPUT(/home/mm8/code/os/mm8/MM8-EmNet/build/stage2.bin binary)
 
 .debug_info     0x0000000000000000     0x19ea

@@ -21,7 +21,7 @@ $(BUILD_DIR)/stage2.bin: $(OBJECTS_ASM) $(OBJECTS_C)
 $(BUILD_DIR)/stage2/c/%.obj: %.c
 	@mkdir -p $(@D)
 	@$(TARGET_CC) $(TARGET_CFLAGS) -c -o $@ $<
-	@echo "--> Compiled: " $<
+	@echo "--> Compiled: " $<	
 
 $(BUILD_DIR)/stage2/asm/%.obj: %.asm
 	@mkdir -p $(@D)
