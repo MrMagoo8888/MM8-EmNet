@@ -371,7 +371,7 @@ file_stage2_bin:        db 'STAGE2  BIN'
 kernel_cluster:         dw 0
 
 STAGE2_LOAD_SEGMENT     equ 0x0
-STAGE2_LOAD_OFFSET      equ 0x500
+STAGE2_LOAD_OFFSET      equ 0x8000
 
 
 times 510-($-$$) db 0
