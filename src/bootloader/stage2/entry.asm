@@ -545,7 +545,7 @@ disablePaging32:
 
     ; --- praw pixel 4: SOLID BRIGHT GREEN pixel at (x=150, y=150) ---
     ; This sures that we are parsing natieve 64-bit logic loops
-    mov rdi, [vbe_screen.physical_buffer]
+    mov edi, [vbe_screen.physical_buffer]
     movzx rax, word [vbe_screen.pitch]
     mov rbx, 150
     mul rbx
@@ -556,7 +556,7 @@ disablePaging32:
     mov dword [rdi], 0x0000FF00             ; Draw 64-bit validation pixel
 
     ; stack setup
-    mov rsp, stack_bum
+    lea rsp, [rel stack_top]
     mov rbp, rsp
 
     ; Pass firswt arg using rdi as per AMD64 System V ABI apparently

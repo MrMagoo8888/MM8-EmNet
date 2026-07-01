@@ -23,10 +23,10 @@ LOAD /home/mm8/code/os/mm8/MM8-EmNet/toolchain/x86_64-elf/lib/gcc/x86_64-elf/13.
                 0x0000000000008000                phys = 0x8000
                 0x0000000000008000                . = phys
 
-.entry          0x0000000000008000      0x35f
+.entry          0x0000000000008000      0x35b
                 0x0000000000008000                __entry_start = .
  *(.entry)
- .entry         0x0000000000008000      0x35f /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
+ .entry         0x0000000000008000      0x35b /home/mm8/code/os/mm8/MM8-EmNet/build/stage2/asm/entry.obj
                 0x0000000000008000                entry
 
 .text           0x0000000000008360     0x1e0c
