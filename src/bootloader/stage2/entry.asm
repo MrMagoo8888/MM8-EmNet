@@ -390,7 +390,7 @@ checkCPUID:
     pushfd
     pop eax
 
-    ; Save value fr comp
+    ; Save value for comparison
     mov ecx, eax
     xor eax, EFLAGS_ID
 
@@ -411,36 +411,24 @@ checkCPUID:
     xor eax, ecx
     jz .notSupported
 
-    ;query max extend leaves
+    ; Query max extended leaves
     mov eax, CPUID_EXTENSIONS
     cpuid
-    cmp eax, CPUID_EXT_FEATURES     ; Comp max leaf to 0x80000001
-    jb .notSupported            ; if the CPU can't report long mode support, then it likely
-                                ; doesn't have it
+    cmp eax, CPUID_EXT_FEATURES
+    jb .notSupported
 
-    ; Query ext feat for l-mode flap
+    ; Query extended features for long mode
     mov eax, CPUID_EXT_FEATURES
     cpuid
     test edx, CPUID_EDX_EXT_FEAT_LM
     jz .notSupported
 
-    .notSupported:
-        mov eax, 0
-        ret
+    mov eax, 1
+    ret
 
-    .supported:
-        mov eax, CPUID_EXTENSIONS
-        cpuid
-        cmp eax, CPUID_EXT_FEATURES
-        jz .NoLongModeSupport
-
-        ;sucsess
-        mov eax, 1
-        ret
-
-        .NoLongModeSupport:
-            mov eax, 0
-            ret
+.notSupported:
+    mov eax, 0
+    ret
     
         
 
@@ -482,41 +470,41 @@ disablePaging32:
     mov DWORD [edi + 4], 0      ;Clear upper 32bits
 
     mov edi, PDPT_ADDR
-    mov DWORD [edi],         0x3000 | PT_ADDR | PT_PRESENT | PT_READABLE
-    mov DWORD [edi + 8],     0x4000 | PT_ADDR | PT_PRESENT | PT_READABLE
-    mov DWORD [edi + 16],    0x5000 | PT_ADDR | PT_PRESENT | PT_READABLE
-    mov DWORD [edi + 24],    0x6000 | PT_ADDR | PT_PRESENT | PT_READABLE
+    mov eax, PDT_ADDR | PT_PRESENT | PT_READABLE
+    mov DWORD [edi], eax
+    mov DWORD [edi + 4], 0
 
-    mov edi, 0x3000
-    mov ebx, 0x80 | PT_ADDR | PT_PRESENT | PT_READABLE
-    mov ecx, 2048
+    mov eax, (PDT_ADDR + 0x1000) | PT_PRESENT | PT_READABLE
+    mov DWORD [edi + 8], eax
+    mov DWORD [edi + 12], 0
 
+    mov eax, (PDT_ADDR + 0x2000) | PT_PRESENT | PT_READABLE
+    mov DWORD [edi + 16], eax
+    mov DWORD [edi + 20], 0
 
+    mov eax, (PDT_ADDR + 0x3000) | PT_PRESENT | PT_READABLE
+    mov DWORD [edi + 24], eax
+    mov DWORD [edi + 28], 0
 
-    ; Identity map the first 2mb of ram via 4kb pages (kinda complete and utter gibberish)
-    ; Upgraded to 4gb ram using 2mb huge pages
-    ; 0x80 is the huge flag bit (CR4.PAE translates this directly to a 2mb page framwork how cool ich das bitter)
+    mov ecx, 4
+    mov ebx, 0x00000083       ; present + writable + 2MB huge page
+    mov esi, PDT_ADDR
 
-    ;mov edi, PT_ADDR
-    ;mov ebx, 0x80 | PT_PRESENT | PT_READABLE    ; 0x0 + flags (0x83)
-    ;mov ecx, 2048                               ; 2048 entries * 2mb per entry = 4GB total identity mapping
+.PageDirLoop:
+    mov edi, esi
+    mov edx, 512
 
+.PageEntryLoop:
+    mov DWORD [edi], ebx      ; Write low 32 (physical address + flags)
+    mov DWORD [edi + 4], 0    ; Clear upper 32 of page entry explicitly
+    add ebx, 0x00200000       ; Move to the next 2MB physical page frame
+    add edi, SIZEOF_PT_ENTRY  ; Move to the next 8-byte page-table entry
+    dec edx
+    jnz .PageEntryLoop
 
-    ;
-    ;   Old working non-huge code
-    ;
-
-; old
-    ;mov edi, PT_ADDR
-    ;mov ebx, PT_PRESENT | PT_READABLE   ; Base physical addr 0x0 + flags (0x3)
-    ;mov ecx, ENTRIES_PER_PT             ; 512 Entries
-
-.SetEntry:
-    mov DWORD [edi], ebx    ; Write low 32 (phy addr flags)
-    mov DWORD [edi + 4], 0  ; Clear upper 32 of page explicetly
-    add ebx, 0x00200000      ;   move  to next 4kb phyical page frame 
-    add edi, SIZEOF_PT_ENTRY    ; Move to next 8byte page temble entry
-    loop .SetEntry               ; Set the next entry.
+    add esi, 0x1000           ; Move to the next page-directory table
+    dec ecx
+    jnz .PageDirLoop
 
     ; Enable PAE and long mode then turning on paging
     mov eax, cr4
