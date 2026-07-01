@@ -380,16 +380,3 @@ dw 0AA55h
 buffer:
 
 ; End of shit
-;
-;
-
-;
-; NOTES
-;
-
-; I'm stating to get a idea of whats up - 12:44:53 12/8/2025
-; Working!!! 12:54:47 12/08/2025
-
-
-; started https://www.youtube.com/watch?v=F3XiH78erNM&list=PLFjM7v6KGMpiH2G-kT781ByCNC_0pKpPN&index=4
-; 8 min in

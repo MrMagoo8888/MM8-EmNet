@@ -15,7 +15,7 @@ void draw_pixel(int x, int y, uint32_t color)
         return;
     }
 
-    uint32_t* framebuffer = (uint32_t*)vbe_screen.physical_buffer;
+    uint32_t* framebuffer = (uint32_t*)(uintptr_t)vbe_screen.physical_buffer;   // Makes it 64 bit
     uint32_t pitch_in_dwords = vbe_screen.pitch / 4;
 
     framebuffer[y * pitch_in_dwords + x] = color;

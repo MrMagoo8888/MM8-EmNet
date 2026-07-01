@@ -1,12 +1,12 @@
 ENTRY(entry)
 OUTPUT_FORMAT("binary")
-phys = 0x00008000;
+phys = 0x00006000;
 
 SECTIONS
 {
     . = phys;
 
-    .entry              : { __entry_start = .;      *(.entry)   }
+    .entry              : { __entry_start = .;      KEEP(*(.entry))   }
     .text               : { __text_start = .;       *(.text)    }
     .data               : { __data_start = .;       *(.data)    }
     .rodata             : { __rodata_start = .;     *(.rodata)  }

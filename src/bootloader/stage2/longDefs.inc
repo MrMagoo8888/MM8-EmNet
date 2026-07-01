@@ -27,7 +27,7 @@ PT_READABLE equ 2                ; marks the entry as r/w
 
 ENTRIES_PER_PT equ 512
 SIZEOF_PT_ENTRY equ 8
-PAGE_SIZE equ 0x1000
+PAGE_SIZE equ 0x200000
 
 CR4_PAE_ENABLE equ 1 << 5
 

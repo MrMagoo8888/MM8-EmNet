@@ -386,11 +386,6 @@ longMode:
 
 
 
-
-
-
-
-
 checkCPUID:
     pushfd
     pop eax
@@ -487,24 +482,39 @@ disablePaging32:
     mov DWORD [edi + 4], 0      ;Clear upper 32bits
 
     mov edi, PDPT_ADDR
-    mov DWORD [edi], PT_ADDR | PT_PRESENT | PT_READABLE
-    mov DWORD [edi + 4], 0  ; Clear upper 32
+    mov DWORD [edi],         0x3000 | PT_ADDR | PT_PRESENT | PT_READABLE
+    mov DWORD [edi + 8],     0x4000 | PT_ADDR | PT_PRESENT | PT_READABLE
+    mov DWORD [edi + 16],    0x5000 | PT_ADDR | PT_PRESENT | PT_READABLE
+    mov DWORD [edi + 24],    0x6000 | PT_ADDR | PT_PRESENT | PT_READABLE
 
-    mov edi, PDT_ADDR
-    mov DWORD [edi], PT_ADDR | PT_PRESENT | PT_READABLE
-    mov DWORD [edi + 4], 0  ; Clear up 32 again lololol
+    mov edi, 0x3000
+    mov ebx, 0x80 | PT_ADDR | PT_PRESENT | PT_READABLE
+    mov ecx, 2048
 
 
 
     ; Identity map the first 2mb of ram via 4kb pages (kinda complete and utter gibberish)
-    mov edi, PT_ADDR
-    mov ebx, PT_PRESENT | PT_READABLE   ; Base physical addr 0x0 + flags (0x3)
-    mov ecx, ENTRIES_PER_PT             ; 512 Entries
+    ; Upgraded to 4gb ram using 2mb huge pages
+    ; 0x80 is the huge flag bit (CR4.PAE translates this directly to a 2mb page framwork how cool ich das bitter)
+
+    ;mov edi, PT_ADDR
+    ;mov ebx, 0x80 | PT_PRESENT | PT_READABLE    ; 0x0 + flags (0x83)
+    ;mov ecx, 2048                               ; 2048 entries * 2mb per entry = 4GB total identity mapping
+
+
+    ;
+    ;   Old working non-huge code
+    ;
+
+; old
+    ;mov edi, PT_ADDR
+    ;mov ebx, PT_PRESENT | PT_READABLE   ; Base physical addr 0x0 + flags (0x3)
+    ;mov ecx, ENTRIES_PER_PT             ; 512 Entries
 
 .SetEntry:
     mov DWORD [edi], ebx    ; Write low 32 (phy addr flags)
     mov DWORD [edi + 4], 0  ; Clear upper 32 of page explicetly
-    add ebx, PAGE_SIZE      ;   move  to next 4kb phyical page frame 
+    add ebx, 0x00200000      ;   move  to next 4kb phyical page frame 
     add edi, SIZEOF_PT_ENTRY    ; Move to next 8byte page temble entry
     loop .SetEntry               ; Set the next entry.
 
@@ -513,7 +523,8 @@ disablePaging32:
     or eax, CR4_PAE_ENABLE
     mov cr4, eax
 
-    mov ecx, 0xC0000080         ; IA32_EFER MSR address
+    ; Fire lmode flag in c-reg CR4
+    mov ecx, 0xC0000080        ; IA32_EFER MSR address
     rdmsr
     or eax, EFER_LME
     wrmsr
